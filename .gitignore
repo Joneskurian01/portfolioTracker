@@ -1,0 +1,16 @@
+## Visual Studio Ignore Rules
+.vs/
+[Bb]in/
+[Oo]bj/
+*.user
+*.userosscache
+*.sln.docstates
+
+## Entity Framework ignore (prevents committing local DBs)
+*.db
+*.sqlite
+
+## User-specific files
+.idea/
+.vscode/
+appsettings.Development.json
