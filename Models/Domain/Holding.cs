@@ -16,8 +16,13 @@ namespace portfoliotracker.Models.Domain
         [ForeignKey("PortfolioId")]
         public Portfolio Portfolio { get; set; }
         [ForeignKey("TagId")]
-        public Tag Tag { get; set; }
+        public Tag? Tag { get; set; }
 
-
+        public void CalculateAveragePrice(List<Trade> trades)
+        {
+            var value = trades.Sum(t => t.Price*t.Quantity);
+            var quantity = trades.Sum(t => t.Quantity);
+            this.AveragePrice = (Decimal) value/ quantity;
+        }
     }
 }
