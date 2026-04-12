@@ -10,17 +10,17 @@ namespace portfoliotracker.Controllers
 
         // POST : https://localhost:7185/user
         [HttpPost]
-        public Task<IActionResult> CreateUser([FromBody] CreateUserDto newUser)
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserDto newUser)
         {
-
+            return null;
         }
 
         // DELETE : https://localhost:7185/user/{id}
         [HttpDelete]
         [Route("{id:guid}")]
-        public Task<IActionResult> DeleteUser([FromRoute] Guid userId)
+        public async Task<IActionResult> DeleteUser([FromRoute] Guid userId)
         {
-
+            return null;
         }
 
 

@@ -49,5 +49,10 @@ namespace portfoliotracker.Models.Domain
                 this.Holdings.Remove(holding);
             }// add error handling for less than 0
         }
+
+        public void Deactivate()
+        {
+            this.IsActive = false;
+        }
     }
 }

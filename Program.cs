@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using portfoliotracker.Data;
+using portfoliotracker.Repository;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<PfTrackerDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("PfTrackerConnectionString"))
 );
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
