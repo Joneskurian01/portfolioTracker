@@ -41,5 +41,14 @@ namespace portfoliotracker.Service
                 };
             return res;
         }
+
+        public async Task<bool> SoftDeleteUserByIdAsync(Guid id)
+        {
+            var user = await _userRepository.GetByIdAsync(id);
+            if (user is null || user.DateDeleted is not null) return false;
+            user.Delete();
+            await _userRepository.SaveChangesAsync();
+           return true;
+        }
     }
 }

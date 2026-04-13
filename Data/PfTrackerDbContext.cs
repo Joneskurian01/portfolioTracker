@@ -9,12 +9,12 @@ namespace portfoliotracker.Data
         { 
         }
 
-        // ADD THESE LINES:
         public DbSet<User> Users { get; set; }
         public DbSet<Portfolio> Portfolios { get; set; }
         public DbSet<Trade> Trades { get; set; }
         public DbSet<Holding> Holdings { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<Stock> Stocks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

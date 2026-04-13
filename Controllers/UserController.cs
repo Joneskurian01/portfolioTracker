@@ -29,9 +29,12 @@ namespace portfoliotracker.Controllers
         // DELETE : https://localhost:7185/user/{id}
         [HttpDelete]
         [Route("{id:guid}")]
-        public async Task<IActionResult> DeleteUser([FromRoute] Guid userId)
+        public async Task<IActionResult> SoftDeleteUser([FromRoute] Guid userId)
         {
-            return null;
+            var res = await _userService.SoftDeleteUserByIdAsync(userId);
+            return res?
+                NoContent(): 
+                BadRequest("User could not be deleted. The user may not exist or is already inactive.");
         }
 
 

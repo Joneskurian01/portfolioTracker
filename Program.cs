@@ -19,6 +19,14 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<PfTrackerDbContext>();
+
+    db.Database.Migrate(); // ensures schema is up to date
+    await DbSeeder.SeedData(db);
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

@@ -29,7 +29,7 @@ namespace portfoliotracker.Repository
 
         public async Task SaveChangesAsync()
         {
-            throw new NotImplementedException();
+           await _context.SaveChangesAsync();
         }
     }
 }
