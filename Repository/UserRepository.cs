@@ -20,9 +20,11 @@ namespace portfoliotracker.Repository
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        public async Task<User> CreateUserAsync(CreateUserDto createUserDto)
+        public async Task<User> CreateUserAsync(User newUser)
         {
-            throw new NotImplementedException();
+            await _context.Users.AddAsync(newUser);
+            await _context.SaveChangesAsync();
+            return newUser;
         }
 
         public async Task SaveChangesAsync()

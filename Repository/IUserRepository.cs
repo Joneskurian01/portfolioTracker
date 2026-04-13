@@ -6,7 +6,7 @@ namespace portfoliotracker.Repository
     public interface IUserRepository
     {
         Task<User?> GetByIdAsync(Guid id);
-        Task<User> CreateUserAsync(CreateUserDto createUserDto);
+        Task<User> CreateUserAsync(User newUser);
         Task SaveChangesAsync();
 
 

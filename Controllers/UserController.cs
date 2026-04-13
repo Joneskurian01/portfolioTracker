@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using portfoliotracker.Models.Domain;
 using portfoliotracker.Models.DTOs;
+using portfoliotracker.Service;
 
 namespace portfoliotracker.Controllers
 {
@@ -7,12 +9,21 @@ namespace portfoliotracker.Controllers
     [Route("[controller]")]
     public class UserController : Controller
     {
+        private readonly IUserService _userService;
 
+        public UserController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
+    
         // POST : https://localhost:7185/user
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserDto newUser)
         {
-            return null;
+            var user = await _userService.CreateUserAsync(newUser);
+            return Ok(user);
+
         }
 
         // DELETE : https://localhost:7185/user/{id}

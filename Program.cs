@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using portfoliotracker.Data;
 using portfoliotracker.Repository;
+using portfoliotracker.Service;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,7 @@ builder.Services.AddDbContext<PfTrackerDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("PfTrackerConnectionString"))
 );
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
