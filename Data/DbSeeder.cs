@@ -1,7 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CsvHelper;
+using CsvHelper.Configuration;
+using CsvHelper.Configuration.Attributes;
+using Microsoft.EntityFrameworkCore;
 using portfoliotracker.Models.Domain;
 using System.Formats.Asn1;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Xml;
 
 namespace portfoliotracker.Data
@@ -12,7 +16,7 @@ namespace portfoliotracker.Data
         {
             if (await context.Stocks.AnyAsync()) return;
 
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "SeedData", "stocktickersasx.csv");
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(),"Data", "SeedData", "stocktickersasx.csv");
 
             if (!File.Exists(filePath))
             {
@@ -20,23 +24,46 @@ namespace portfoliotracker.Data
                 return;
             }
 
-            var newStocks = new List<Stock>();
+            using var reader = new StreamReader(filePath);
+            using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 
-            var rows = File.ReadAllLines(filePath).Skip(1);
+            csv.Context.RegisterClassMap<StockSeedMap>();
 
-            foreach(var row in rows)
-            {
-                var cols = row.Split(',');
-
-                context.Stocks.Add(new Stock
+            var records = csv.GetRecords<StockSeed>()
+                .Select(stock => new Stock()
                 {
-                    Ticker = cols[0]+".AX",
-                    Name = cols[1], 
+                    Ticker = stock.Code,
+                    Name = stock.Name,
                     Location = "AU"
-                });
-            }
+                })
+                .ToList();
 
+            await context.Stocks.AddRangeAsync(records);
             await context.SaveChangesAsync();
+        }
+    }
+
+    public class StockSeed
+    {
+        public StockSeed() { }
+
+        [Name("ASX code")]
+        public string Code { get; set; }
+
+        [Name("Company name")]
+        public string Name { get; set; }
+
+        [Name("Market Cap")]
+        public double MarketCap { get; set; }
+    }
+
+    public sealed class StockSeedMap : ClassMap<StockSeed>
+    {
+        public StockSeedMap()
+        {
+            Map(m => m.Code).Name("ASX code");
+            Map(m => m.Name).Name("Company name");
+            Map(m => m.MarketCap).Name("Market Cap");
         }
     }
 }
