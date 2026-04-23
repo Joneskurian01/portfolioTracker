@@ -7,9 +7,9 @@ namespace portfoliotracker.Controllers
     [Route("[controller]")]
     public class PortfolioController
     {
-        private readonly IPortfolioService _service; 
+        private readonly IStockService _service; 
 
-        public PortfolioController(IPortfolioService portfolioService)
+        public PortfolioController(IStockService portfolioService)
         {
             this._service = portfolioService;
         }

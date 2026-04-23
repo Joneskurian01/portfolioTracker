@@ -2,8 +2,8 @@
 
 namespace portfoliotracker.Repository
 {
-    public interface IPortfolioRepository
+    public interface IStockRepository
     {
-        Task<GetStockDto> GetStockAsync();
+        Task<GetStockDto?> GetStockByIdAsync(int id);
     }
 }

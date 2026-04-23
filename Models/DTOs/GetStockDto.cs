@@ -2,8 +2,9 @@
 {
     public class GetStockDto
     {
-        public String Ticker;
-        public String Name;
+        
+        public string Ticker;
+        public string Name;
         public float Price;
         public double MarketCap; 
     }
